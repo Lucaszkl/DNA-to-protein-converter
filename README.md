@@ -46,7 +46,7 @@ simple DNA to mRNA to protein script
 ...     'UAA':'X', 'UAG':'X', 'UGA':'X'
 ... }
 ...
-... dna_sequence = "ATGCTCGATCAGAGCAGTTAGAGATAGAGACCGCCAGAC" (ADD ANY DNA SEQUENCE (ATGC))
+... dna_sequence = "ATGCTCGATCAGAGCAGTTAGAGATAGAGACCGCCAGAC" #ADD ANY DNA SEQUENCE
 ... mrna_sequence = dna_sequence.replace("T", "U")
 ...
 ... print(f"DNA:  {dna_sequence}")
