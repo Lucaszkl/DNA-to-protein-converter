@@ -1,0 +1,44 @@
+codon_table = {
+    # Alanine (A)
+    'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCU':'A',
+    # Arginine (R)
+    'AGA':'R', 'AGG':'R', 'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGU':'R',
+    # Asparagine (N)
+    'AAC':'N', 'AAU':'N',
+    # Aspartic acid (D)
+    'GAC':'D', 'GAU':'D',
+    # Cysteine (C)
+    'UGC':'C', 'UGU':'C',
+    # Glutamic acid (E)
+    'GAA':'E', 'GAG':'E',
+    # Glutamine (Q)
+    'CAA':'Q', 'CAG':'Q',
+    # Glycine (G)
+    'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGU':'G',
+    # Histidine (H)
+    'CAC':'H', 'CAU':'H',
+    # Isoleucine (I)
+    'AUA':'I', 'AUC':'I', 'AUU':'I',
+    # Leucine (L)
+    'CUA':'L', 'CUC':'L', 'CUG':'L', 'CUU':'L', 'UUA':'L', 'UUG':'L',
+    # Lysine (K)
+    'AAA':'K', 'AAG':'K',
+    # Methionine (M) - Start Codon
+    'AUG':'M',
+    # Phenylalanine (F)
+    'UUC':'F', 'UUU':'F',
+    # Proline (P)
+    'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCU':'P',
+    # Serine (S)
+    'AGC':'S', 'AGU':'S', 'UCA':'S', 'UCC':'S', 'UCG':'S', 'UCU':'S',
+    # Threonine (T)
+    'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACU':'T',
+    # Tryptophan (W)
+    'UGG':'W',
+    # Tyrosine (Y)
+    'UAC':'Y', 'UAU':'Y',
+    # Valine (V)
+    'GUA':'V', 'GUC':'V', 'GUG':'V', 'GUU':'V',
+    # STOP Codons
+    'UAA':'X', 'UAG':'X', 'UGA':'X'
+}
