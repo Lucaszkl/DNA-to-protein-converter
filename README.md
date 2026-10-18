@@ -1,2 +1,1 @@
-DNA to amino acid translator
-Use the codon table in the Translator to convert the single letters to their respective amino acids, or just select 3 in the terminal for it to output it in its full names
+DNA to amino acid translator, insert the DNA sequence into the terminal (ATGC) doesnt need to have a start codon to begin, use the codon table in the Translator to convert the single letters to their respective amino acids, or just select 3 in the terminal for it to output it in its full names.
