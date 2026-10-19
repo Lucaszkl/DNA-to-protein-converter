@@ -84,10 +84,11 @@ for i in range(0, len(mrna_sequence), 3):
 
     amino_acid = codon_table.get(codon, '?')
 
+    protein.append(amino_acid)
     if amino_acid == 'X':
+        print("\n STOP CODON (UAA, UAG, UGA) TRANSLATION ENDS \n")
         break
 
-    protein.append(amino_acid)
 
 
 protein_string = "".join(protein)
