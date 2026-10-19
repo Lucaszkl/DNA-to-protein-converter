@@ -90,13 +90,20 @@ for i in range(0, len(mrna_sequence), 3):
         break
 
 
-
 protein_string = "".join(protein)
 print("Resulting Protein:", protein_string)
 
+if output_format not in ['1', '2', '3']:
+    print("no format selected from 1, 2, or 3")
+
 if output_format == '1':
-    print("Amino Acid Sequence (Single-letter):", protein_string)
+    print("Amino Acid Sequence (Single-letter):", protein_string) if protein_string else print("No DNA sequence provided.")     
+
+
 elif output_format == '2':
-    print("Amino Acid Sequence (Three-letter):", "".join(biochem_names.get(aa, '?') for aa in protein))
+    print("Amino Acid Sequence (Three-letter):", "".join(biochem_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+
+
 elif output_format == '3':
-    print("Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein))
+    print("Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+
