@@ -39,8 +39,8 @@ codon_table = {
     'UAC':'Y', 'UAU':'Y',
     # Valine (V)
     'GUA':'V', 'GUC':'V', 'GUG':'V', 'GUU':'V',
-    # STOP Codons
-    'UAA':'X', 'UAG':'X', 'UGA':'X'
+    # STOP Codons (-STOP-CODON-HIT-)
+    'UAA':'-STOP-CODON-HIT-', 'UAG':'-STOP-CODON-HIT-', 'UGA':'-STOP-CODON-HIT-'
 }
 
 biochem_names = {
@@ -51,7 +51,7 @@ biochem_names = {
 }
 
 Full_names = {
-    'A': 'Alanine', 'R': 'Arginine', 'N': 'Asparagine', 'D': 'Aspartic Acid', 'C': 'Cysteine',
+    'A': 'Alanine', 'R': 'Arginine', 'N': 'Asparagine', 'D': 'Aspartic-acid', 'C': 'Cysteine',
     'E': 'Glutamic Acid', 'Q': 'Glutamine', 'G': 'Glycine', 'H': 'Histidine', 'I': 'Isoleucine',
     'L': 'Leucine', 'K': 'Lysine', 'M': 'Methionine', 'F': 'Phenylalanine', 'P': 'Proline',
     'S': 'Serine', 'T': 'Threonine', 'W': 'Tryptophan', 'Y': 'Tyrosine', 'V': 'Valine', '?': 'Unknown'
@@ -70,8 +70,8 @@ output_format = input("Enter your choice (1/2/3): ").strip()
 
 mrna_sequence = dna_sequence.replace("T", "U")
 
-print(f"DNA:  {dna_sequence}")
-print(f"mRNA: {mrna_sequence}")
+print(f"\n DNA:  {dna_sequence}")
+print(f"\n mRNA: {mrna_sequence}")
 
 protein = []
 
@@ -79,31 +79,33 @@ for i in range(0, len(mrna_sequence), 3):
     codon = mrna_sequence[i:i+3]
 
     if len(codon) < 3:
-        break
-
+        break 
 
     amino_acid = codon_table.get(codon, '?')
 
     protein.append(amino_acid)
-    if amino_acid == 'X':
+
+    if amino_acid == '-STOP-CODON-HIT-':
         print("\n STOP CODON (UAA, UAG, UGA) TRANSLATION ENDS \n")
         break
 
 
 protein_string = "".join(protein)
-print("Resulting Protein:", protein_string)
+print("\n Resulting Output (USE CODON TABLE TO INFER LETTERS):", protein_string)
+
 
 if output_format not in ['1', '2', '3']:
-    print("no format selected from 1, 2, or 3")
+    print("\n no format selected from 1, 2, or 3")
+   
 
 if output_format == '1':
-    print("Amino Acid Sequence (Single-letter):", protein_string) if protein_string else print("No DNA sequence provided.")     
+    print("\n Amino Acid Sequence (Single-letter):", protein_string) if protein_string else print("No DNA sequence provided.")
 
 
 elif output_format == '2':
-    print("Amino Acid Sequence (Three-letter):", "".join(biochem_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+    print("\n Amino Acid Sequence (Three-letter):", "".join(biochem_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
 
 
 elif output_format == '3':
-    print("Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+    print("\n Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
 
