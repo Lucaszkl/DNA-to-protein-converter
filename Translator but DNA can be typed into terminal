@@ -1,53 +1,77 @@
 codon_table = {
-    # Alanine (A)
+    # Alanine (A), grey
     'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCU':'A',
-    # Arginine (R)
+    # Arginine (R), blue
     'AGA':'R', 'AGG':'R', 'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGU':'R',
-    # Asparagine (N)
+    # Asparagine (N), green
     'AAC':'N', 'AAU':'N',
-    # Aspartic acid (D)
+    # Aspartic acid (D), red
     'GAC':'D', 'GAU':'D',
-    # Cysteine (C)
+    # Cysteine (C), grey
     'UGC':'C', 'UGU':'C',
-    # Glutamic acid (E)
+    # Glutamic acid (E), red
     'GAA':'E', 'GAG':'E',
-    # Glutamine (Q)
+    # Glutamine (Q), green
     'CAA':'Q', 'CAG':'Q',
-    # Glycine (G)
+    # Glycine (G), grey
     'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGU':'G',
-    # Histidine (H)
+    # Histidine (H), green
     'CAC':'H', 'CAU':'H',
-    # Isoleucine (I)
+    # Isoleucine (I), grey
     'AUA':'I', 'AUC':'I', 'AUU':'I',
-    # Leucine (L)
+    # Leucine (L), grey
     'CUA':'L', 'CUC':'L', 'CUG':'L', 'CUU':'L', 'UUA':'L', 'UUG':'L',
-    # Lysine (K)
+    # Lysine (K), blue
     'AAA':'K', 'AAG':'K',
-    # Methionine (M) - Start Codon
+    # Methionine (M), grey
     'AUG':'M',
-    # Phenylalanine (F)
+    # Phenylalanine (F), grey
     'UUC':'F', 'UUU':'F',
-    # Proline (P)
+    # Proline (P), grey
     'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCU':'P',
-    # Serine (S)
+    # Serine (S), green
     'AGC':'S', 'AGU':'S', 'UCA':'S', 'UCC':'S', 'UCG':'S', 'UCU':'S',
-    # Threonine (T)
+    # Threonine (T), green
     'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACU':'T',
-    # Tryptophan (W)
+    # Tryptophan (W), grey
     'UGG':'W',
-    # Tyrosine (Y)
+    # Tyrosine (Y), green
     'UAC':'Y', 'UAU':'Y',
-    # Valine (V)
+    # Valine (V), grey
     'GUA':'V', 'GUC':'V', 'GUG':'V', 'GUU':'V',
-    # STOP Codons
-    'UAA':'X', 'UAG':'X', 'UGA':'X'
+    # STOP Codons (-STOP-CODON-HIT-)
+    'UAA':'-STOP-CODON-HIT-', 'UAG':'-STOP-CODON-HIT-', 'UGA':'-STOP-CODON-HIT-'
 }
 
+biochem_names = {
+    'A': 'Ala', 'R': 'Arg', 'N': 'Asn', 'D': 'Asp', 'C': 'Cys',
+    'E': 'Glu', 'Q': 'Gln', 'G': 'Gly', 'H': 'His', 'I': 'Ile',
+    'L': 'Leu', 'K': 'Lys', 'M': 'Met', 'F': 'Phe', 'P': 'Pro',
+    'S': 'Ser', 'T': 'Thr', 'W': 'Trp', 'Y': 'Tyr', 'V': 'Val', '?': '???'
+}
+
+Full_names = {
+    'A': 'Alanine', 'R': 'Arginine', 'N': 'Asparagine', 'D': 'Aspartic-acid', 'C': 'Cysteine',
+    'E': 'Glutamic Acid', 'Q': 'Glutamine', 'G': 'Glycine', 'H': 'Histidine', 'I': 'Isoleucine',
+    'L': 'Leucine', 'K': 'Lysine', 'M': 'Methionine', 'F': 'Phenylalanine', 'P': 'Proline',
+    'S': 'Serine', 'T': 'Threonine', 'W': 'Tryptophan', 'Y': 'Tyrosine', 'V': 'Valine', '?': 'Unknown'
+}
+
+
 dna_sequence = input("Enter a DNA sequence: ").strip().upper()
+print(f"Input DNA sequence: {dna_sequence}")
+
+print("choose amino acid output format")
+print("1. Single-letter code")
+print("2. Three-letter code")
+print("3. Full_name")
+
+output_format = input("Enter your choice (1/2/3): ").strip()
+
 mrna_sequence = dna_sequence.replace("T", "U")
 
-print(f"DNA:  {dna_sequence}")
-print(f"mRNA: {mrna_sequence}")
+print(f"\n DNA:  {dna_sequence}")
+print(f"\n mRNA: {mrna_sequence}")
 
 protein = []
 
@@ -55,16 +79,32 @@ for i in range(0, len(mrna_sequence), 3):
     codon = mrna_sequence[i:i+3]
 
     if len(codon) < 3:
-        break
-
+        break 
 
     amino_acid = codon_table.get(codon, '?')
 
-    if amino_acid == 'X':
-        break
-
     protein.append(amino_acid)
+
+    if amino_acid == '-STOP-CODON-HIT-':
+        print("\n ***STOP CODON (UAA, UAG, UGA) TRANSLATION ENDS*** \n")
+        break
 
 
 protein_string = "".join(protein)
-print("Resulting Protein:", protein_string)
+print("\n Resulting Output (USE CODON TABLE TO INFER LETTERS OR SELECT 3 FOR OUTPUT):", protein_string)
+
+
+if output_format not in ['1', '2', '3']:
+    print("\n no format selected from 1, 2, or 3")
+
+if output_format == '1':
+    print("\n Amino Acid Sequence (Single-letter):", protein_string) if protein_string else print("No DNA sequence provided.")
+
+
+elif output_format == '2':
+    print("\n Amino Acid Sequence (Three-letter):", "".join(biochem_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+
+
+elif output_format == '3':
+    print("\n Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
+
