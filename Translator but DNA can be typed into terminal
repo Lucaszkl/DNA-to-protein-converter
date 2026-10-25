@@ -1,43 +1,43 @@
 codon_table = {
-    # Alanine (A), grey
+    # Alanine (A)
     'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCU':'A',
-    # Arginine (R), blue
+    # Arginine (R)
     'AGA':'R', 'AGG':'R', 'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGU':'R',
-    # Asparagine (N), green
+    # Asparagine (N)
     'AAC':'N', 'AAU':'N',
-    # Aspartic acid (D), red
+    # Aspartic acid (D)
     'GAC':'D', 'GAU':'D',
-    # Cysteine (C), grey
+    # Cysteine (C)
     'UGC':'C', 'UGU':'C',
-    # Glutamic acid (E), red
+    # Glutamic acid (E)
     'GAA':'E', 'GAG':'E',
-    # Glutamine (Q), green
+    # Glutamine (Q)
     'CAA':'Q', 'CAG':'Q',
-    # Glycine (G), grey
+    # Glycine (G)
     'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGU':'G',
-    # Histidine (H), green
+    # Histidine (H)
     'CAC':'H', 'CAU':'H',
-    # Isoleucine (I), grey
+    # Isoleucine (I)
     'AUA':'I', 'AUC':'I', 'AUU':'I',
-    # Leucine (L), grey
+    # Leucine (L)
     'CUA':'L', 'CUC':'L', 'CUG':'L', 'CUU':'L', 'UUA':'L', 'UUG':'L',
-    # Lysine (K), blue
+    # Lysine (K)
     'AAA':'K', 'AAG':'K',
-    # Methionine (M), grey
+    # Methionine (M)
     'AUG':'M',
-    # Phenylalanine (F), grey
+    # Phenylalanine (F)
     'UUC':'F', 'UUU':'F',
-    # Proline (P), grey
+    # Proline (P)
     'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCU':'P',
-    # Serine (S), green
+    # Serine (S)
     'AGC':'S', 'AGU':'S', 'UCA':'S', 'UCC':'S', 'UCG':'S', 'UCU':'S',
-    # Threonine (T), green
+    # Threonine (T)
     'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACU':'T',
-    # Tryptophan (W), grey
+    # Tryptophan (W)
     'UGG':'W',
-    # Tyrosine (Y), green
+    # Tyrosine (Y)
     'UAC':'Y', 'UAU':'Y',
-    # Valine (V), grey
+    # Valine (V)
     'GUA':'V', 'GUC':'V', 'GUG':'V', 'GUU':'V',
     # STOP Codons (-STOP-CODON-HIT-)
     'UAA':'-STOP-CODON-HIT-', 'UAG':'-STOP-CODON-HIT-', 'UGA':'-STOP-CODON-HIT-'
@@ -108,3 +108,7 @@ elif output_format == '2':
 elif output_format == '3':
     print("\n Amino Acid Sequence (Full Name):", "".join(Full_names.get(aa, 'Unknown') for aa in protein)) if protein_string else print("No DNA sequence provided.")
 
+acidic = {"D", "E"}
+basic = {"K", "R"}
+polar = {"N", "Q", "S", "T", "Y", "C", "H"}
+apolar = {"A", "V", "I", "L", "M", "F", "W", "P", "G"}
