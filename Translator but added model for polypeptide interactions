@@ -112,3 +112,18 @@ acidic = {"D", "E"}
 basic = {"K", "R"}
 polar = {"N", "Q", "S", "T", "Y", "C", "H"}
 apolar = {"A", "V", "I", "L", "M", "F", "W", "P", "G"}
+
+property_colours= { "Acidic": "#ef5350",
+  "Basic": "#42a5f5",
+  "Polar": "#66bb6a",
+  "Apolar": "#b0bec5" }
+
+def get_property(aa):
+  if aa in acidic:
+     return "Acidic"
+  elif aa in basic:
+     return "Basic"
+  elif aa in polar:
+     return "Polar"
+  elif aa in apolar:
+     return "Apolar"
