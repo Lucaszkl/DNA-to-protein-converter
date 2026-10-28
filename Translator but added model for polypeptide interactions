@@ -127,3 +127,161 @@ def get_property(aa):
      return "Polar"
   elif aa in apolar:
      return "Apolar"
+
+
+def create_3d_polypeptide(protein):
+    sequence = [
+        aa for aa in protein
+        if aa in biochem_names and aa != "?"
+    ]
+
+    if not sequence:
+        print("NO AMINO ACIDS AVAILABLE FOR VISUALIZATION")
+        return
+
+    rng = np.random.default_rng(42)
+    positions = [np.zeros(3)]
+
+    for _ in range(1, len(sequence)):
+        direction = rng.normal(size=3)
+        direction /= np.linalg.norm(direction)
+        positions.append(positions[-1] + direction)
+
+    coords = np.array(positions)
+    coords -= coords.mean(axis=0)
+
+    properties = [get_property(aa) for aa in sequence]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter3d(
+        x=coords[:, 0],
+
+        y=coords[:, 1],
+
+        z=coords[:, 2],
+        mode="lines",
+        line=dict(color="white", width=5),
+        name="Polypeptide backbone"
+    ))
+
+    for category, color in property_colours.items():
+        indices = [
+            i for i, prop in enumerate(properties)
+            if prop == category
+        ]
+
+        if not indices:
+            continue
+
+        fig.add_trace(go.Scatter3d(
+            x=coords[indices, 0],
+            y=coords[indices, 1],
+            z=coords[indices, 2],
+            mode="markers+text",
+            text=[
+                f"{sequence[i]}{i + 1}"
+                for i in indices
+            ],
+            textposition="top center",
+            marker=dict(size=7, color=color),
+            name=category,
+            customdata=[
+                [
+                    Full_names.get(sequence[i], "Unknown"),
+                    biochem_names.get(sequence[i], "?"),
+                    category
+                ]
+                for i in indices
+            ],
+            hovertemplate=(
+                "Amino acid: %{customdata[0]}<br>"
+                "Code: %{customdata[1]}<br>"
+                "Property: %{customdata[2]}<br>"
+                "Position: %{text}"
+            )
+        ))
+
+    interaction_styles = {
+        "Acidic-Basic": ("#ce93d8", 1.8),
+        "Polar-Polar": ("#ffee58", 1.5),
+        "Apolar-Apolar": ("#ffb74d", 1.5)
+    }
+
+    shown_interactions = set()
+    interaction_counts = {
+        name: 0 for name in interaction_styles
+    }
+
+    for i in range(len(sequence)):
+        for j in range(i + 4, len(sequence)):
+            distance = np.linalg.norm(coords[i] - coords[j])
+
+            p1 = properties[i]
+            p2 = properties[j]
+
+            if {p1, p2} == {"Acidic", "Basic"}:
+                kind = "Acidic-Basic"
+            elif p1 == p2 == "Polar":
+                kind = "Polar-Polar"
+            elif p1 == p2 == "Apolar":
+                kind = "Apolar-Apolar"
+            else:
+                continue
+
+            color, threshold = interaction_styles[kind]
+
+            if distance < threshold:
+                interaction_counts[kind] += 1
+
+                fig.add_trace(go.Scatter3d(
+                    x=[coords[i, 0] , coords[j, 0]],
+                    y=[coords[i, 1] , coords[j, 1]],
+                    z=[coords[i, 2] , coords[j, 2]],
+                    mode="lines",
+                    line=dict(
+                        color=color,
+                        width=4,
+                        dash="dash"
+                    ),
+                    name=kind.replace("-", " ") + " contact",
+                    legendgroup=kind,
+                    showlegend=kind not in shown_interactions,
+                    hovertemplate=(
+                        f"{kind} candidate<br>"
+                        f"Residues {i + 1} and {j + 1}<br>"
+                        f"Model distance: {distance:.2f} units"
+                        "<extra></extra>"
+                    )
+                ))
+
+                shown_interactions.add(kind)
+
+    fig.update_layout(
+        title=(
+            "3D Polypeptide Model"
+            "<br><sup> Illustrative model for fun, not a real protein fold (VERY UNREALISTIC)</sup>"
+        ),
+        scene=dict(
+            xaxis_title="X",
+            yaxis_title="Y",
+            zaxis_title="Z",
+            aspectmode="data"
+        ),
+        template="plotly_dark",
+        legend=dict(title="Amino acid properties"),
+        margin=dict(l=0, r=0, t=80, b=0)
+    )
+    fig.write_html("polypeptide_3d.html", auto_open=True)
+
+    print("\n3D model saved as polypeptide_3d.html")
+    print("Residues visualized:", len(sequence))
+    print("\n Amount of contact counts:")
+
+    for name, count in interaction_counts.items():
+        print(f"{name}: {count}")
+
+    fig.show()
+
+create_3d_polypeptide(protein)
+
+print("\n completed model outputed into browser \n")
