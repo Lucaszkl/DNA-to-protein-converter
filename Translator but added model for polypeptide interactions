@@ -276,6 +276,7 @@ def create_3d_polypeptide(protein):
     print("\n3D model saved as polypeptide_3d.html")
     print("Residues visualized:", len(sequence))
     print("\n Amount of contact counts:")
+    print("\n completed model outputed into browser \n")
 
     for name, count in interaction_counts.items():
         print(f"{name}: {count}")
@@ -283,5 +284,3 @@ def create_3d_polypeptide(protein):
     fig.show()
 
 create_3d_polypeptide(protein)
-
-print("\n completed model outputed into browser \n")
